@@ -41,12 +41,31 @@ git remote add origin https://github.com/viktishchenko/ngrx-test.git
 git remote -v
 
 // add remote folder
-
 git push --set-upstream origin master
 
 git al
 git commit --amend --no-edit
 git push -f
+
+```
+
+</details>
+
+<details>
+<summary>init auth-app</summary>
+
+```js
+// info
+git br
+git co -b auth
+
+// init w/o install
+ngrx-test> ng new auth-app --directory=./ --skip-install --skip-git --skip-tests
+
+// push it
+git al
+git cm "init: auth app"
+git push --set-upstream origin auth
 
 ```
 
