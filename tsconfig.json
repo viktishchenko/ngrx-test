@@ -18,6 +18,8 @@
     "target": "ES2022",
     "module": "ES2022"
   },
+  "lib": ["es2017", "dom", "ES2017.object"],
+  "include": ["src/**/*.ts"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

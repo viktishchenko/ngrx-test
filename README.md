@@ -70,3 +70,23 @@ git push --set-upstream origin auth
 ```
 
 </details>
+
+<details>
+<summary>backend server</summary>
+
+```js
+
+npm i body-parser
+npm i express
+npm i ts-node
+
+
+// run server
+npm run server
+
+// run app
+npm run start
+
+```
+
+</details>
