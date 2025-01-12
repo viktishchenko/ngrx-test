@@ -90,3 +90,22 @@ npm run start
 ```
 
 </details>
+
+<details>
+<summary>auth</summary>
+
+```js
+
+ng g c auth
+ng g c auth/login
+ng g m auth
+ng g i auth/model/user model --type=model
+ng g s auth/auth
+
+ng add @angular/material
+
+npm i @ngrx/operators
+
+```
+
+</details>

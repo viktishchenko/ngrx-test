@@ -2,7 +2,7 @@ export const USERS = {
   1: {
     id: 1,
     email: 'test@angular-mail.com',
-    password: '12345',
+    password: 'test',
   },
 };
 
