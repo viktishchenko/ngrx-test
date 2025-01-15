@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar style="gap: 10px" color="primary">
   <button mat-icon-button (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
@@ -7,7 +7,7 @@
 
 <mat-sidenav-container>
   <mat-sidenav mode="side" [opened]="isDesktop" #sidenav fullscreen>
-    <mat-nav-list>
+    <mat-nav-list (click)="sidenav.close()">
       @for (item of navItems; track item) {
       <a
         mat-list-item
