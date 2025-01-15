@@ -12,4 +12,8 @@ mat-card-title {
 .login-form {
   display: flex;
   flex-direction: column;
+
+  & button {
+    border-radius: 4px;
+  }
 }

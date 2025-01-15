@@ -1,9 +1,31 @@
-main {
-  margin: 30px;
+mat-sidenav-container {
+  height: calc(100% - 70px);
+}
+
+mat-sidenav {
+  width: 280px;
+  border-right: 1px solid gainsboro;
+  border-radius: 0;
+}
+
+mat-toolbar {
+  background-color: var(--mat-sys-surface-variant);
+}
+
+mat-sidenav-content {
+  padding: 1.5rem;
+}
+
+.mat-mdc-nav-list .mat-mdc-list-item {
+  border-radius: 0;
+}
+
+.mat-nav-list a.active {
+  background: blue;
 }
 
 .menu-button {
-  background: rgba(255, 170, 0, 0.76);
+  background-color: transparent;
   color: white;
   border: none;
   cursor: pointer;
