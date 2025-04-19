@@ -1,16 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 
 import { NgIf, NgFor, NgClass } from '@angular/common';
 import { Product } from '../product';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
+import { ProductService } from '../product.service';
+import { Subscription, tap } from 'rxjs';
 
 @Component({
-    selector: 'pm-product-list',
-    templateUrl: './product-list.component.html',
-    standalone: true,
-  imports: [NgIf, NgFor, NgClass, ProductDetailComponent]
+  selector: 'pm-product-list',
+  templateUrl: './product-list.component.html',
+  standalone: true,
+  imports: [NgIf, NgFor, NgClass, ProductDetailComponent],
 })
-export class ProductListComponent {
+export class ProductListComponent implements OnInit, OnDestroy {
+  private productService = inject(ProductService);
+  sub!: Subscription;
+
+  ngOnInit(): void {
+    this.sub = this.productService
+      .getProducts()
+      .pipe(
+        tap((data) => {
+          this.products = data;
+        })
+      )
+      .subscribe();
+  }
+
   // Just enough here for the template to compile
   pageTitle = 'Products';
   errorMessage = '';
@@ -23,5 +39,9 @@ export class ProductListComponent {
 
   onSelected(productId: number): void {
     this.selectedProductId = productId;
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }
