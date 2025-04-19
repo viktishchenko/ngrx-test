@@ -10,7 +10,7 @@ import {
 import { NgIf, NgFor, CurrencyPipe } from '@angular/common';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
-import { Subscription, tap } from 'rxjs';
+import { catchError, EMPTY, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'pm-product-detail',
@@ -33,6 +33,10 @@ export class ProductDetailComponent implements OnChanges, OnDestroy {
         .pipe(
           tap((data) => {
             this.product = data;
+          }),
+          catchError((err) => {
+            this.errorMessage = err;
+            return EMPTY;
           })
         )
         .subscribe();
