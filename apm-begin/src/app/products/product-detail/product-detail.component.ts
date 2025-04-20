@@ -15,6 +15,9 @@ export class ProductDetailComponent {
   private productService = inject(ProductService);
   errorMessage = '';
 
+  readonly isLoading$ = this.productService.isLoading$;
+  readonly selectedProducts$ = this.productService.selectedProduct$;
+
   readonly product$ = this.productService.product$.pipe(
     catchError((err) => {
       this.errorMessage = err;

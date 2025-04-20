@@ -4,7 +4,12 @@
       <div class="card-header">
         {{ pageTitle }}
       </div>
-
+      <div
+        class="card-body"
+        *ngIf="(isLoading$ | async) && !(selectedProduct$ | async)"
+      >
+        Loading...
+      </div>
       <div class="card-body" *ngIf="products$ | async as products">
         <div class="list-group">
           <button

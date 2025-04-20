@@ -5,6 +5,7 @@ import {
   catchError,
   combineLatest,
   filter,
+  finalize,
   map,
   Observable,
   of,
@@ -31,22 +32,28 @@ export class ProductService {
   );
   readonly selectedProduct$ = this.selectedProductSubject.asObservable();
 
+  private isLoadingSubject = new BehaviorSubject<boolean>(true);
+  readonly isLoading$ = this.isLoadingSubject.asObservable();
+
   readonly products$ = this.http.get<Product[]>(this.productsUrl).pipe(
     tap((x) => console.log(JSON.stringify(x))),
     shareReplay(1),
-    catchError((err) => this.handleError(err))
+    catchError((err) => this.handleError(err)),
+    finalize(() => this.isLoadingSubject.next(false))
   );
 
   readonly product$ = combineLatest([
     this.selectedProduct$,
     this.products$,
   ]).pipe(
+    tap(() => this.isLoadingSubject.next(true)),
     map(([selectedProductId, products]) =>
       products.find((product) => product.id === selectedProductId)
     ),
     filter(Boolean),
     switchMap((product) => this.getProductWithReviews(product)),
-    catchError((err) => this.handleError(err))
+    catchError((err) => this.handleError(err)),
+    tap(() => this.isLoadingSubject.next(false))
   );
 
   getProductWithReviews(product: Product): Observable<Product> {

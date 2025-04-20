@@ -1,3 +1,9 @@
+<div
+  style="margin: 20px 0 0 10px"
+  *ngIf="(isLoading$ | async) && (selectedProducts$ | async)"
+>
+  Loading...
+</div>
 <div class="card" *ngIf="product$ | async as product">
   <div class="card-header">
     {{ pageTitle }}
