@@ -5,6 +5,7 @@ import {
   map,
   Observable,
   of,
+  shareReplay,
   switchMap,
   tap,
   throwError,
@@ -24,9 +25,8 @@ export class ProductService {
   private reviewsService = inject(ReviewService);
 
   readonly products$ = this.http.get<Product[]>(this.productsUrl).pipe(
-    tap(() => {
-      console.log('halo products');
-    }),
+    tap((x) => console.log(JSON.stringify(x))),
+    shareReplay(1),
     catchError((err) => this.handleError(err))
   );
 
@@ -34,7 +34,6 @@ export class ProductService {
     const productUrl = this.productsUrl + '/' + id;
     return this.http.get<Product>(productUrl).pipe(
       switchMap((product) => this.getProductWithReviews(product)),
-      tap((x) => console.log('halo single product', x)),
       catchError((err) => this.handleError(err))
     );
   }
