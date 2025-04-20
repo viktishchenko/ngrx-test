@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 
-import { NgIf, NgFor, NgClass } from '@angular/common';
+import { NgIf, NgFor, NgClass, AsyncPipe } from '@angular/common';
 import { Product } from '../product';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
 import { ProductService } from '../product.service';
@@ -10,26 +10,20 @@ import { catchError, EMPTY, Subscription, tap } from 'rxjs';
   selector: 'pm-product-list',
   templateUrl: './product-list.component.html',
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, ProductDetailComponent],
+  imports: [AsyncPipe, NgIf, NgFor, NgClass, ProductDetailComponent],
 })
-export class ProductListComponent implements OnInit, OnDestroy {
+export class ProductListComponent {
   private productService = inject(ProductService);
-  sub!: Subscription;
 
-  ngOnInit(): void {
-    this.sub = this.productService
-      .getProducts()
-      .pipe(
-        tap((data) => {
-          this.products = data;
-        }),
-        catchError((err) => {
-          this.errorMessage = err;
-          return EMPTY;
-        })
-      )
-      .subscribe();
-  }
+  readonly products$ = this.productService.products$.pipe(
+    tap((data) => {
+      this.products = data;
+    }),
+    catchError((err) => {
+      this.errorMessage = err;
+      return EMPTY;
+    })
+  );
 
   // Just enough here for the template to compile
   pageTitle = 'Products';
@@ -43,9 +37,5 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   onSelected(productId: number): void {
     this.selectedProductId = productId;
-  }
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
   }
 }

@@ -23,14 +23,12 @@ export class ProductService {
   private errorService = inject(HttpErrorService);
   private reviewsService = inject(ReviewService);
 
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsUrl).pipe(
-      tap(() => {
-        console.log('halo products');
-      }),
-      catchError((err) => this.handleError(err))
-    );
-  }
+  readonly products$ = this.http.get<Product[]>(this.productsUrl).pipe(
+    tap(() => {
+      console.log('halo products');
+    }),
+    catchError((err) => this.handleError(err))
+  );
 
   getProduct(id: number): Observable<Product> {
     const productUrl = this.productsUrl + '/' + id;
