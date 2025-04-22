@@ -1,8 +1,18 @@
-import { Injectable } from "@angular/core";
+import { effect, Injectable, signal } from '@angular/core';
+import { CartItem } from './cart';
+import { Product } from '../products/product';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CartService {
+  cartItems = signal<CartItem[]>([]);
 
+  eLength = effect(() =>
+    console.log('this.cartItems.length :>> ', this.cartItems().length)
+  );
+
+  addToCard(product: Product) {
+    this.cartItems.update((items) => [...items, { product, quantity: 1 }]);
+  }
 }
